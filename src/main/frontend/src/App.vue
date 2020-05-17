@@ -11,32 +11,44 @@
       <meetings-page :username="authenticatedUsername"></meetings-page>
     </div>
     <div v-else>
-      <login-form @login="login($event)"></login-form>
+      <button @click="registering = false"
+              :class="registering ? 'button-outline' : ''">Loguję się</button>
+      <button @click="registering = true"
+              :class="!registering ? 'button-outline' : ''">Rejestruję się</button>
+      <login-form @login="login($event)"
+                  v-if="registering === false"></login-form>
+      <login-form @login="register($event)"
+                  button-label="Zarejestruj się"
+                  v-else></login-form>
     </div>
   </div>
 </template>
 
 <script>
-    import "milligram";
-    import LoginForm from "./LoginForm";
-    import MeetingsPage from "./meetings/MeetingsPage";
+  import "milligram";
+  import LoginForm from "./LoginForm";
+  import MeetingsPage from "./meetings/MeetingsPage";
 
-    export default {
-        components: {LoginForm, MeetingsPage},
-        data() {
-            return {
-                authenticatedUsername: ""
-            };
-        },
-        methods: {
-            login(user) {
-                this.authenticatedUsername = user.login;
-            },
-            logout() {
-                this.authenticatedUsername = '';
-            }
-        }
-    };
+  export default {
+    components: {LoginForm, MeetingsPage},
+    data() {
+      return {
+        authenticatedUsername: "",
+        registering: false
+      };
+    },
+    methods: {
+      login(user) {
+        this.authenticatedUsername = user.login;
+      },
+      register(user) {
+
+      },
+      logout() {
+        this.authenticatedUsername = '';
+      }
+    }
+  };
 </script>
 
 <style>
@@ -49,4 +61,3 @@
     vertical-align: middle;
   }
 </style>
-
